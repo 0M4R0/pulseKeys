@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="0M4R0" />
+    <meta name="description" content="Pulse keys" />
+    <title>Pulse Keys</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Pulse Keys</h1>
+            <p class="subtitle">Touch the keys to create your sound experience</p>
+        </header>
+        <main class="keys-container" aria-label="Key controls">
+            <div class="main-keys">
+                <button type="button" class="key" data-key="q" tabindex="0">Q</button>
+                <button type="button" class="key" data-key="w" tabindex="0">W</button>
+                <button type="button" class="key" data-key="e" tabindex="0">E</button>
+                <button type="button" class="key" data-key="a" tabindex="0">A</button>
+                <button type="button" class="key" data-key="s" tabindex="0">S</button>
+                <button type="button" class="key" data-key="d" tabindex="0">D</button>
+                <button type="button" class="key" data-key="z" tabindex="0">Z</button>
+                <button type="button" class="key" data-key="x" tabindex="0">X</button>
+                <button type="button" class="key" data-key="c" tabindex="0">C</button>
+            </div>
+            <div class="secondary-keys">
+                <button type="button" class="key" data-key="j" tabindex="0">J</button>
+                <button type="button" class="key" data-key="k" tabindex="0">K</button>
+                <button type="button" class="key" data-key="l" tabindex="0">L</button>
+            </div>
+            <div class="custom-keys" id="customKeys">
+                <!-- Custom keys will be added here -->
+            </div>
+            <div class="timer" role="status" aria-live="polite">
+                <span id="timeSpan"></span>
+            </div>
+        </main>
+
+        <div id="optionsBtnContainer" class="options-btn-container">
+            <button type="button" id="optionsBtn" class="open-options-btn">Options</button>
+        </div>
+
+        <div id="gitHubBtnContainer" class="gitHub-btn-container">
+            <a class="gitHub-btn-link" aria-label="GitHub" rel="noopener noreferrer" href="https://github.com/0M4R0" target="_blank">
+                <img src="./assets/github-svgrepo-com.svg" alt="GitHub">
+                <span class="gitHub-btn-text">View on GitHub</span>
+            </a>
+        </div>
+
+
+        <div id="optionsWindow" class="options-window">
+            <div id="optionsHeader" class="options-header">
+                <span>Options</span>
+                <button type="button" id="closeOptions" class="close-btn">Close</button>
+            </div>
+            <div id="optionsContent" class="options-content">
+                <!-- Background Color -->
+                <div class="option-group">
+                    <label for="bgColorPicker">Background Color</label>
+                    <div class="color-picker-container">
+                        <input aria-label="Background Color" type="color" id="bgColorPicker" value="#000000">
+                        <input aria-label="Color Value" type="text" id="colorValue" value="#000000" maxlength="7"
+                            placeholder="#000000">
+                    </div>
+                </div>
+
+                <!-- Volume Controls -->
+                <div class="option-group">
+                    <label for="masterVolume">Master Volume</label>
+                    <div class="slider-container">
+                        <input aria-label="Master Volume" type="range" id="masterVolume" class="slider" min="0"
+                            max="100" value="50">
+                        <span id="masterVolumeValue" class="slider-value">50%</span>
+                    </div>
+                </div>
+
+                <!-- Particle Effects -->
+                <div class="option-group">
+                    <label>Particle Effects</label>
+                    <div class="checkbox-container">
+                        <input aria-label="Particle Effects" type="checkbox" id="particleEffects" class="checkbox"
+                            checked>
+                        <span>Enable particles when keys are pressed</span>
+                    </div>
+                </div>
+
+                <!-- Key Editing -->
+                <div class="option-group">
+                    <label>Key Sound Editing</label>
+                    <button type="button" id="editModeBtn" class="button">Enable Edit Mode</button>
+                    <div id="editModeInfo" class="edit-mode-info" style="display: none;">
+                        Click on any key to change its sound. Upload an audio file to replace the current sound.
+                    </div>
+                    <div id="keyEditor" class="key-editor" style="display: none;">
+                        <h4 id="editingKeyName">Editing Key: -</h4>
+                        <div class="file-input-wrapper">
+                            <button type="button" id="audioFileBtn" aria-label="Choose Audio File" class="button">Choose
+                                Audio File</button>
+                            <input type="file" id="audioFileInput" class="file-input" accept="audio/*">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add New Keys -->
+                <div class="option-group">
+                    <label>Add Custom Key</label>
+                    <div class="add-key-section">
+                        <input aria-label="New Key" type="text" id="newKeyInput" class="key-input" maxlength="1"
+                            placeholder="K" tabindex="0">
+                        <div class="file-input-wrapper">
+                            <button type="button" id="newKeySoundBtn" aria-label="Choose Sound" class="button">Choose
+                                Sound</button>
+                            <input aria-label="Choose Sound" type="file" id="newKeySoundInput" class="file-input"
+                                accept="audio/*">
+                        </div>
+                        <button type="button" aria-label="Add Key" id="addKeyBtn" class="button">Add Key</button>
+                    </div>
+                </div>
+
+                <!-- Reset Settings -->
+                <div class="option-group">
+                    <label>Reset Settings</label>
+                    <button type="button" id="resetBtn" class="button danger">Reset to Default</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+
+</html>

@@ -1,0 +1,473 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #000000;
+    transition: background-color 0.3s ease;
+    overflow-x: hidden;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    color: #94949b;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.keys-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #000000;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.main-keys,
+.secondary-keys,
+.custom-keys {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    background-color: #000000;
+    transition: background-color 0.3s ease;
+}
+
+.key {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    position: relative;
+}
+
+.key.active {
+    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.key.editable {
+    border-color: rgba(100, 255, 100, 0.5);
+}
+
+.key .edit-indicator {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: rgba(100, 255, 100, 0.8);
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .key {
+        transition: none;
+    }
+
+    .key.active {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .key {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+.timer {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: background-color 0.3s ease;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+/* Particle effects */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+/* Options button */
+.options-btn-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.open-options-btn {
+    background-color: rgba(255, 255, 255, 0.105);
+    border: 1.3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: #ffffff;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.open-options-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Options window */
+.options-window {
+    position: fixed;
+    display: none;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(15, 15, 15, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    width: 350px;
+    max-width: calc(100% - 40px);
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+.options-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #a0a0a0;
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 8px;
+    margin: -8px -8px -8px 0;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.option-group {
+    margin-bottom: 16px;
+}
+
+.option-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    border: none;
+}
+
+.slider-value {
+    min-width: 35px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+#bgColorPicker {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#bgColorPicker::-webkit-color-swatch {
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0;
+}
+
+#colorValue {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 14px;
+    color: #ffffff;
+    width: 80px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#colorValue:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#colorValue:invalid {
+    border-color: rgba(255, 100, 100, 0.5);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+.checkbox:checked {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 1px;
+    color: white;
+    font-size: 14px;
+}
+
+.button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.button.danger {
+    border-color: rgba(255, 100, 100, 0.5);
+    color: rgba(255, 150, 150, 1);
+}
+
+.button.danger:hover {
+    background: rgba(255, 100, 100, 0.1);
+}
+
+.add-key-section {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.key-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: white;
+    padding: 6px 8px;
+    font-size: 12px;
+    width: 40px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.edit-mode-info {
+    background: rgba(100, 255, 100, 0.1);
+    border: 1px solid rgba(100, 255, 100, 0.3);
+    border-radius: 6px;
+    padding: 8px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: rgba(100, 255, 100, 1);
+}
+
+.key-editor {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.key-editor h4 {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+
+/* GitHub */
+.gitHub-btn-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.gitHub-btn-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1.3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: #fff;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    overflow: hidden;
+    max-width: 48px;
+}
+
+.gitHub-btn-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    max-width: 180px;
+}
+
+.gitHub-btn-link img {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.gitHub-btn-text {
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gitHub-btn-link:hover .gitHub-btn-text {
+    opacity: 1;
+}
+
